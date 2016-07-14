@@ -1,0 +1,110 @@
+<div class="row">
+	<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<strong>Currently: </strong><small>{{ forecast?.currently?.summary }}</small>
+			</div>
+			<div class="panel-body">
+				<div class="col-lg-4 col-md-2 col-sm-2 col-xs-4">
+					<img style="width:150px" src="app/img/{{forecast?.currently?.icon}}.svg"/><br>
+				</div>
+				<div class="col-lg-8 col-md-10 col-sm-10 col-xs-8">
+					<span><strong>Temperature: </strong>{{ forecast?.currently?.temperature | degrees }}</span><br>
+					<span *ngIf="forecast?.currently?.temperature != forecast?.currently?.temperature">
+						<strong>Feels Like: </strong>{{ forecast?.currently?.apparentTemperature | degrees }}
+					<br></span>
+					<span><strong>Wind: </strong>{{ forecast?.currently?.windSpeed }}km/h</span><br>
+					<span><strong>Humidity: </strong>{{ forecast?.currently?.humidity | percent }}</span><br>
+					<span><strong>Clouds: </strong>{{ forecast?.currently?.cloudCover | percent }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-9 col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<strong>This Week: </strong><small>{{ forecast?.daily?.summary }}</small>
+			</div>
+			<div class="panel-body">
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+					<div class="row">
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" *ngFor="let day of (forecast?.daily?.data | slice:0:4)" style="text-align:center">
+							<span><strong>{{ day.time*1000 | date:'EEEE' }}</strong></span><br>
+							<img style="width:60px;" src="app/img/{{day.icon}}.svg"/><br>
+							<span><strong>High: </strong>{{ day.temperatureMax | degrees }}</span><br>
+							<span><strong>Low: </strong>{{ day.temperatureMin | degrees }}</span><br>
+							<span><strong>POP: </strong>{{ day.precipProbability | percent }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+					<div class="row">
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" *ngFor="let day of (forecast?.daily?.data | slice:4:8)" style="text-align:center">
+							<span><strong>{{ day.time*1000 | date:'EEEE' }}</strong></span><br>
+							<img style="width:60px;" src="app/img/{{day.icon}}.svg"/><br>
+							<span><strong>High: </strong>{{ day.temperatureMax | degrees }}</span><br>
+							<span><strong>Low: </strong>{{ day.temperatureMin | degrees }}</span><br>
+							<span><strong>POP: </strong>{{ day.precipProbability | percent }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-9 col-lg-offset-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<strong>Today: </strong><small>{{ forecast?.hourly?.summary }}</small>
+			</div>
+			<div class="panel-body">
+				<table class="table table-condensed" style="font-size:14px">
+					<thead>
+						<tr>
+							<th>Time</th>
+							<th>Conditions</th>
+							<th>Temp.</th>
+							<th>Humidity</th>
+							<th>Precipitation</th>
+							<th>Clouds</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let hour of (forecast?.hourly?.data | slice:0:6) ">
+							<td>{{ hour.time*1000 | date:'HH:mm' }}</td>
+							<td><img style="width:40px;margin-top:-10px;margin-bottom:-10px" src="app/img/{{hour.icon}}.svg"/>{{ hour.summary }}</td>
+							<td>{{ hour.temperature | degrees }}</td>
+							<td>{{ hour.humidity | percent }}</td>
+							<td>{{ hour.precipIntensity }} mm/h ({{ hour.precipProbability | percent }})</td>
+							<td>{{ hour.cloudCover | percent }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<style type="text/css">
+#cbc_div { background: rgb(204, 204, 204); width: 250px; }
+#cbc_div h3 { background: rgb(204, 204, 204); }
+#cbc_div h3 a { color: rgb(168, 38, 43); font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-decoration: none; }
+#cbc_div dl { border-bottom: 1px solid rgb(204, 204, 204); }
+#cbc_div dt a { color: rgb(19, 45, 108); font-family: Arial, Helvetica, sans-serif; font-size: 13px; }
+.cbc_lead { display: none; }
+.cbc_timezone { color: rgb(0, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 10px; margin-left: 0px; }
+#cbc_div .dl3, #cbc_div .dl4, #cbc_div .dl5, #cbc_div .dl6 { display: none; }
+</style><script language="javascript" src="http://www.cbc.ca/cgi-bin/freeheadlines/headlines.cgi?logo=0&cat=98,15"></script>
+
+<!-- <div class="row">
+	<h2>Next 7 Days</h2>
+	<div class="col-lg-1" *ngFor="let day of forecast?.daily?.data">
+		<span>{{ day.time*1000 | date:'EEEE' }}</span>
+		<img style="width:60px;" src="app/img/{{day.icon}}.svg"/>
+		<span><strong>High: </strong>{{ day.temperatureMax }}</span>
+		<span><strong>Low: </strong>{{ day.temperatureMax }}</span>
+	</div>
+</div> -->
+<!-- <div class="row">
+	<iframe src="https://calendar.google.com/calendar/embed?src=sbyron15%40gmail.com&ctz=America/Toronto" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+</div> -->

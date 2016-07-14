@@ -1,0 +1,10 @@
+{
+	"port" : 4000,
+	"target" : "https://api.forecast.io:443",
+	"ssl" : {
+		"cert" : "server.crt",
+		"key" : "server.key",
+		"rejectUnauthorized" : false,
+		"requestCert": false
+	}
+}
